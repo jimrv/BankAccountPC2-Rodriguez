@@ -26,23 +26,28 @@ namespace BankAccountPC2.Controllers
         public IActionResult Index()
         {
             var misclientes = from o in _context.DataCliente select o;
-            var viewModel = new ClienteViewModel{
+            _logger.LogDebug("cliente {misclientes}", misclientes);
+            var viewModel = new ClienteViewModel
+            {
                 FormCliente = new Cliente(),
                 ListCliente = misclientes
             };
-            return View(misclientes.ToList());
+            _logger.LogDebug("viewModel {viewModel}", viewModel);
+
+            return View(viewModel);
         }
 
         [HttpPost]
         public IActionResult Crear(ClienteViewModel viewModel)
         {
             _logger.LogDebug("Ingreso a Crear Cuenta");
-            
-            var cliente=new Cliente{
-                NombreT=viewModel.FormCliente.NombreT,
-                TipoC=viewModel.FormCliente.TipoC,
-                SaldoI=viewModel.FormCliente.SaldoI,
-                Email=viewModel.FormCliente.Email,
+
+            var cliente = new Cliente
+            {
+                NombreT = viewModel.FormCliente.NombreT,
+                TipoC = viewModel.FormCliente.TipoC,
+                SaldoI = viewModel.FormCliente.SaldoI,
+                Email = viewModel.FormCliente.Email,
             };
 
             _context.Add(cliente);
