@@ -53,7 +53,7 @@ namespace BankAccountPC2.Controllers
             _context.Add(cliente);
             _context.SaveChanges();
 
-            return View("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
