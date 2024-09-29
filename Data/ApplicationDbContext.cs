@@ -9,5 +9,5 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
-    public DbSet<BankAccountPC2.Models.Cliente> Cliente { get; set; }
+    public DbSet<BankAccountPC2.Models.Cliente> DataCliente { get; set; }
 }

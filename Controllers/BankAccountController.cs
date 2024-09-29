@@ -7,7 +7,7 @@ using BankAccountPC2.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BankAccountPC2.Models;
-
+using BankAccountPC2.ViewModel;
 
 namespace BankAccountPC2.Controllers
 {
@@ -25,15 +25,27 @@ namespace BankAccountPC2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var misclientes = from o in _context.DataCliente select o;
+            var viewModel = new ClienteViewModel{
+                FormCliente = new Cliente(),
+                ListCliente = misclientes
+            };
+            return View(misclientes.ToList());
         }
 
         [HttpPost]
-        public IActionResult Crear(Cliente objcliente)
+        public IActionResult Crear(ClienteViewModel viewModel)
         {
             _logger.LogDebug("Ingreso a Crear Cuenta");
-           
-            _context.Add(objcliente);
+            
+            var cliente=new Cliente{
+                NombreT=viewModel.FormCliente.NombreT,
+                TipoC=viewModel.FormCliente.TipoC,
+                SaldoI=viewModel.FormCliente.SaldoI,
+                Email=viewModel.FormCliente.Email,
+            };
+
+            _context.Add(cliente);
             _context.SaveChanges();
 
             return View("Index");
